@@ -1,0 +1,33 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "resourceGroupName": {
+      "value": "rg-java-sample-app"
+    },
+    "appServicePlanName": {
+      "value": "asp-java-sample"
+    },
+    "appServiceName": {
+      "value": "app-java-sample-${uniqueString(resourceGroup().id)}"
+    },
+    "location": {
+      "value": "Canada Central"
+    },
+    "appServicePlanSku": {
+      "value": "F1"
+    },
+    "javaVersion": {
+      "value": "17"
+    },
+    "tags": {
+      "value": {
+        "Environment": "Dev",
+        "Project": "Java Sample App",
+        "Owner": "Development Team",
+        "Tier": "Free",
+        "Region": "Canada Central"
+      }
+    }
+  }
+} 

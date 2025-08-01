@@ -1,0 +1,75 @@
+name: Deploy Azure Infrastructure
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+        - dev
+        - staging
+        - prod
+      location:
+        description: 'Azure region'
+        required: true
+        default: 'Canada Central'
+        type: string
+      appServiceName:
+        description: 'App Service name'
+        required: true
+        default: 'app-java-sample'
+        type: string
+
+env:
+  SUBSCRIPTION_ID: '4cae711c-2969-439a-b455-19dd1a5693eb'
+  RESOURCE_GROUP_NAME: 'rg-java-sample-app'
+
+jobs:
+  deploy-infrastructure:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment || 'dev' }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Azure Login
+      uses: azure/login@v2
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        subscription-id: ${{ env.SUBSCRIPTION_ID }}
+        
+    - name: Deploy Infrastructure
+      uses: azure/arm-deploy@v1
+      with:
+        subscriptionId: ${{ env.SUBSCRIPTION_ID }}
+        resourceGroupName: ${{ env.RESOURCE_GROUP_NAME }}
+        template: ./infrastructure/main.bicep
+        parameters: >
+          resourceGroupName=${{ env.RESOURCE_GROUP_NAME }}
+          appServiceName=${{ github.event.inputs.appServiceName || 'app-java-sample' }}
+          location=${{ github.event.inputs.location || 'Canada Central' }}
+          environment=${{ github.event.inputs.environment || 'dev' }}
+        deploymentMode: Incremental
+        
+    - name: Get App Service Details
+      run: |
+        echo "App Service Name: $(az webapp show --name ${{ github.event.inputs.appServiceName || 'app-java-sample' }} --resource-group ${{ env.RESOURCE_GROUP_NAME }} --query name -o tsv)"
+        echo "App Service URL: https://$(az webapp show --name ${{ github.event.inputs.appServiceName || 'app-java-sample' }} --resource-group ${{ env.RESOURCE_GROUP_NAME }} --query defaultHostName -o tsv)"
+        
+    - name: Get Publish Profile
+      run: |
+        az webapp deployment list-publishing-profiles \
+          --name ${{ github.event.inputs.appServiceName || 'app-java-sample' }} \
+          --resource-group ${{ env.RESOURCE_GROUP_NAME }} \
+          --xml > publish-profile.xml
+        echo "Publish profile saved to publish-profile.xml"
+        
+    - name: Upload Publish Profile
+      uses: actions/upload-artifact@v4
+      with:
+        name: publish-profile
+        path: publish-profile.xml 
