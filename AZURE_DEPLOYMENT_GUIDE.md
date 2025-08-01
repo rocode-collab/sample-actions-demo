@@ -84,22 +84,22 @@ az webapp deployment list-publishing-profiles \
 
 Go to your GitHub repository → Settings → Secrets and variables → Actions
 
-#### 1. AZURE_CREDENTIALS
-- **Value**: The JSON output from the service principal creation
-- **Format**: 
-```json
-{
-  "clientId": "...",
-  "clientSecret": "...",
-  "subscriptionId": "4cae711c-2969-439a-b455-19dd1a5693eb",
-  "tenantId": "..."
-}
-```
+#### 1. AZURE_CLIENT_ID
+- **Value**: The client ID from the service principal creation
+- **Example**: `12345678-1234-1234-1234-123456789012`
 
-#### 2. AZURE_WEBAPP_NAME
+#### 2. AZURE_TENANT_ID
+- **Value**: The tenant ID from the service principal creation
+- **Example**: `87654321-4321-4321-4321-210987654321`
+
+#### 3. AZURE_CLIENT_SECRET
+- **Value**: The client secret from the service principal creation
+- **Example**: `abc123def456ghi789...`
+
+#### 4. AZURE_WEBAPP_NAME
 - **Value**: `app-java-sample` (or your custom App Service name)
 
-#### 3. AZURE_WEBAPP_PUBLISH_PROFILE
+#### 5. AZURE_WEBAPP_PUBLISH_PROFILE
 - **Value**: The entire content of the `publish-profile.xml` file
 
 ### How to Add Secrets

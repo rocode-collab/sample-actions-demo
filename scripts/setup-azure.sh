@@ -72,6 +72,11 @@ SP_OUTPUT=$(az ad sp create-for-rbac --name $SP_NAME --role contributor --scopes
 
 echo -e "${GREEN}Service principal created successfully!${NC}"
 
+# Parse the service principal output to extract individual values
+CLIENT_ID=$(echo $SP_OUTPUT | jq -r '.clientId')
+TENANT_ID=$(echo $SP_OUTPUT | jq -r '.tenantId')
+CLIENT_SECRET=$(echo $SP_OUTPUT | jq -r '.clientSecret')
+
 # Display next steps
 echo -e "${YELLOW}=============================================${NC}"
 echo -e "${YELLOW}NEXT STEPS:${NC}"
@@ -81,8 +86,11 @@ echo -e "${GREEN}1. Add the following secrets to your GitHub repository:${NC}"
 echo "   Go to: Settings → Secrets and variables → Actions"
 echo ""
 echo -e "${GREEN}2. Required GitHub Secrets:${NC}"
-echo "   AZURE_CREDENTIALS:"
-echo "   $SP_OUTPUT"
+echo "   AZURE_CLIENT_ID: $CLIENT_ID"
+echo ""
+echo "   AZURE_TENANT_ID: $TENANT_ID"
+echo ""
+echo "   AZURE_CLIENT_SECRET: $CLIENT_SECRET"
 echo ""
 echo "   AZURE_WEBAPP_NAME: $APP_SERVICE_NAME"
 echo ""

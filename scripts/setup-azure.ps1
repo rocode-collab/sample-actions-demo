@@ -74,6 +74,12 @@ $spOutput = az ad sp create-for-rbac --name $spName --role contributor --scopes 
 
 Write-Host "Service principal created successfully!" -ForegroundColor $Green
 
+# Parse the service principal output to extract individual values
+$spJson = $spOutput | ConvertFrom-Json
+$clientId = $spJson.clientId
+$tenantId = $spJson.tenantId
+$clientSecret = $spJson.clientSecret
+
 # Display next steps
 Write-Host "=============================================" -ForegroundColor $Yellow
 Write-Host "NEXT STEPS:" -ForegroundColor $Yellow
@@ -83,8 +89,11 @@ Write-Host "1. Add the following secrets to your GitHub repository:" -Foreground
 Write-Host "   Go to: Settings → Secrets and variables → Actions"
 Write-Host ""
 Write-Host "2. Required GitHub Secrets:" -ForegroundColor $Green
-Write-Host "   AZURE_CREDENTIALS:"
-Write-Host $spOutput
+Write-Host "   AZURE_CLIENT_ID: $clientId"
+Write-Host ""
+Write-Host "   AZURE_TENANT_ID: $tenantId"
+Write-Host ""
+Write-Host "   AZURE_CLIENT_SECRET: $clientSecret"
 Write-Host ""
 Write-Host "   AZURE_WEBAPP_NAME: $AppServiceName"
 Write-Host ""
