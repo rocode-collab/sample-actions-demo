@@ -17,7 +17,7 @@ echo "=============================================="
 # Configuration
 SUBSCRIPTION_ID="4cae711c-2969-439a-b455-19dd1a5693eb"
 RESOURCE_GROUP_NAME="rg-java-sample-app"
-LOCATION="Canada Central"
+LOCATION="canadacentral"
 APP_SERVICE_NAME="app-java-sample"
 
 # Check if Azure CLI is installed
@@ -39,16 +39,15 @@ az account set --subscription $SUBSCRIPTION_ID
 
 # Create resource group
 echo -e "${GREEN}Creating resource group: ${RESOURCE_GROUP_NAME}${NC}"
-az group create --name $RESOURCE_GROUP_NAME --location "$LOCATION"
+az group create --name $RESOURCE_GROUP_NAME --location $LOCATION
 
 # Deploy infrastructure using Bicep
 echo -e "${GREEN}Deploying infrastructure using Bicep (Free Tier)...${NC}"
 az deployment group create \
     --resource-group $RESOURCE_GROUP_NAME \
     --template-file infrastructure/main.bicep \
-    --parameters resourceGroupName=$RESOURCE_GROUP_NAME \
     --parameters appServiceName=$APP_SERVICE_NAME \
-    --parameters location="$LOCATION" \
+    --parameters location=$LOCATION \
     --parameters appServicePlanSku="F1"
 
 # Get App Service details

@@ -4,7 +4,7 @@
 param(
     [string]$SubscriptionId = "4cae711c-2969-439a-b455-19dd1a5693eb",
     [string]$ResourceGroupName = "rg-java-sample-app",
-    [string]$Location = "Canada Central",
+    [string]$Location = "canadacentral",
     [string]$AppServiceName = "app-java-sample"
 )
 
