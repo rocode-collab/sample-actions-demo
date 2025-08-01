@@ -45,6 +45,10 @@ jobs:
       with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
         
+    - name: Create Resource Group
+      run: |
+        az group create --name ${{ env.RESOURCE_GROUP_NAME }} --location "${{ github.event.inputs.location || 'Canada Central' }}"
+        
     - name: Deploy Infrastructure
       uses: azure/arm-deploy@v1
       with:
@@ -75,4 +79,4 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: publish-profile
-        path: publish-profile.xml 
+        path: publish-profile.xml
