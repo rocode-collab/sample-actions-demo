@@ -85,22 +85,29 @@ az webapp deployment list-publishing-profiles \
 Go to your GitHub repository → Settings → Secrets and variables → Actions
 
 #### 1. AZURE_CLIENT_ID
-- **Value**: The client ID from the service principal creation
+- **Value**: The client ID from the managed identity
 - **Example**: `12345678-1234-1234-1234-123456789012`
 
 #### 2. AZURE_TENANT_ID
-- **Value**: The tenant ID from the service principal creation
+- **Value**: The tenant ID from your Azure subscription
 - **Example**: `87654321-4321-4321-4321-210987654321`
 
-#### 3. AZURE_CLIENT_SECRET
-- **Value**: The client secret from the service principal creation
-- **Example**: `abc123def456ghi789...`
+#### 3. AZURE_SUBSCRIPTION_ID
+- **Value**: Your Azure subscription ID
+- **Example**: `4cae711c-2969-439a-b455-19dd1a5693eb`
 
 #### 4. AZURE_WEBAPP_NAME
 - **Value**: `app-java-sample` (or your custom App Service name)
 
 #### 5. AZURE_WEBAPP_PUBLISH_PROFILE
 - **Value**: The entire content of the `publish-profile.xml` file
+
+### Authentication Method
+
+This setup uses **Federated Identity** (OIDC) which is more secure than service principal secrets:
+- No secrets to store or rotate
+- Automatic token exchange
+- Enhanced security
 
 ### How to Add Secrets
 

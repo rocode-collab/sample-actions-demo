@@ -254,11 +254,18 @@ This application is configured to deploy to Azure App Service using free Azure p
 
 ### Required Secrets
 
-- `AZURE_CLIENT_ID`: Azure service principal client ID
-- `AZURE_TENANT_ID`: Azure service principal tenant ID
-- `AZURE_CLIENT_SECRET`: Azure service principal client secret
+- `AZURE_CLIENT_ID`: Azure managed identity client ID
+- `AZURE_TENANT_ID`: Azure tenant ID
+- `AZURE_SUBSCRIPTION_ID`: Azure subscription ID
 - `AZURE_WEBAPP_NAME`: Azure App Service name
 - `AZURE_WEBAPP_PUBLISH_PROFILE`: Azure App Service publish profile
+
+### Authentication
+
+This setup uses **Federated Identity** (OIDC) for secure authentication:
+- No secrets to store or rotate
+- Automatic token exchange
+- Enhanced security
 
 ### Deployment Process
 
