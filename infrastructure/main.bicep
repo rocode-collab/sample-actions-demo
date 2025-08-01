@@ -2,7 +2,7 @@
 param appServicePlanName string = 'asp-java-sample'
 
 @description('The name of the App Service')
-param appServiceName string = 'app-java-sample'
+param appServiceName string = 'app-java-sample1'
 
 @description('The location for all resources')
 param location string = 'canadacentral'
