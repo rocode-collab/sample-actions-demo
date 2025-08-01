@@ -54,7 +54,9 @@ jobs:
         subscriptionId: ${{ env.SUBSCRIPTION_ID }}
         resourceGroupName: ${{ env.RESOURCE_GROUP_NAME }}
         template: ./infrastructure/main.bicep
-        parameters: ./infrastructure/parameters.json
+        parameters: |
+          appServiceName=${{ github.event.inputs.appServiceName }}
+          location=${{ github.event.inputs.location }}
         deploymentMode: Incremental
         
     - name: Get App Service Details

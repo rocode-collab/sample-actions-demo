@@ -5,7 +5,7 @@ param appServicePlanName string = 'asp-java-sample'
 param appServiceName string = 'app-java-sample'
 
 @description('The location for all resources')
-param location string = resourceGroup().location
+param location string = 'canadacentral'
 
 @description('The SKU for the App Service Plan (F1 for free tier)')
 param appServicePlanSku string = 'F1'
@@ -14,7 +14,13 @@ param appServicePlanSku string = 'F1'
 param javaVersion string = '17'
 
 @description('Tags to apply to all resources')
-param tags object = {}
+param tags object = {
+  Environment: 'Dev'
+  Project: 'Java Sample App'
+  Owner: 'Development Team'
+  Tier: 'Free'
+  Region: 'canadacentral'
+}
 
 // App Service Plan (Free Tier)
 resource appServicePlan 'Microsoft.Web/serverfarms@2023-01-01' = {
@@ -75,4 +81,4 @@ output appServiceName string = appService.name
 output appServiceUrl string = 'https://${appService.properties.defaultHostName}'
 output appServicePlanName string = appServicePlan.name
 output appInsightsName string = appInsights.name
-output appInsightsKey string = appInsights.properties.InstrumentationKey 
+output appInsightsKey string = appInsights.properties.InstrumentationKey
