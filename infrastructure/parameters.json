@@ -6,7 +6,7 @@
       "value": "asp-java-sample"
     },
     "appServiceName": {
-      "value": "app-java-sample-${uniqueString(resourceGroup().id)}"
+      "value": "app-java-sample"
     },
     "location": {
       "value": "canadacentral"
