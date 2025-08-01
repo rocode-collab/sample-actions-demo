@@ -15,8 +15,7 @@ on:
       location:
         description: 'Azure region'
         required: true
-        default: 'Canada Central'
-        type: string
+        default: 'canadacentral'
       appServiceName:
         description: 'App Service name'
         required: true
