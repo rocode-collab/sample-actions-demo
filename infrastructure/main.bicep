@@ -1,6 +1,3 @@
-@description('The name of the resource group')
-param resourceGroupName string
-
 @description('The name of the App Service Plan')
 param appServicePlanName string = 'asp-java-sample'
 
