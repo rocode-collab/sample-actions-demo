@@ -66,7 +66,7 @@ resource appService 'Microsoft.Web/sites@2023-01-01' = {
 
 // Application Insights (Free tier)
 resource appInsights 'Microsoft.Insights/components@2020-02-02' = {
-  name: 'ai-${appServiceName}'
+  name: appServiceName
   location: location
   kind: 'web'
   properties: {
