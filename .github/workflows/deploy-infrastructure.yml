@@ -54,11 +54,7 @@ jobs:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         resourceGroupName: ${{ env.RESOURCE_GROUP_NAME }}
         template: ./infrastructure/main.bicep
-        parameters: >
-          resourceGroupName=${{ env.RESOURCE_GROUP_NAME }}
-          appServiceName=${{ github.event.inputs.appServiceName || 'app-java-sample' }}
-          location=${{ github.event.inputs.location || 'Canada Central' }}
-          environment=${{ github.event.inputs.environment || 'dev' }}
+        parameters: ./infrastructure/parameters.json
         deploymentMode: Incremental
         
     - name: Get App Service Details
